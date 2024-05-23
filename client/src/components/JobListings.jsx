@@ -2,26 +2,42 @@ import { useState, useEffect } from 'react';
 import JobListing from './JobListing';
 import Spinner from './Spinner';
 
+type Job = {
+  id: string;
+  title: string;
+  type: string;
+  description: string;
+  location: string;
+  company: {
+    name: string;
+  };
+};
+
 const JobListings = ({ isHome = false }) => {
-  const [jobs, setJobs] = useState([]);
+  const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchJobs = async () => {
-      const apiUrl = isHome ? '/api/jobs?_limit=3' : '/api/jobs';
+      const apiUrl = isHome
+        ? 'https://jobs.github.com/positions.json?limit=3'
+        : 'https://jobs.github.com/positions.json';
       try {
         const res = await fetch(apiUrl);
+        if (!res.ok) {
+          throw new Error('Failed to fetch jobs');
+        }
         const data = await res.json();
         setJobs(data);
       } catch (error) {
-        console.log('Error fetching data', error);
+        console.error('Error fetching data', error);
       } finally {
         setLoading(false);
       }
     };
 
     fetchJobs();
-  }, []);
+  }, [isHome]);
 
   return (
     <section className='bg-blue-50 px-4 py-10'>
@@ -43,4 +59,5 @@ const JobListings = ({ isHome = false }) => {
     </section>
   );
 };
+
 export default JobListings;

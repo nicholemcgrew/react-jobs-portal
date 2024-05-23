@@ -2,8 +2,10 @@ import { useParams, useLoaderData, useNavigate } from 'react-router-dom';
 import { FaArrowLeft, FaMapMarker } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import Modal from 'react-modal';
 
 const JobPage = ({ deleteJob }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const { id } = useParams();
   const job = useLoaderData();

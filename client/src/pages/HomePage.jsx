@@ -1,3 +1,4 @@
+
 import Hero from '../components/Hero'
 import HomeCards from '../components/HomeCards'
 import JobListings from '../components/JobListings'
@@ -8,7 +9,7 @@ const HomePage = () => {
     <>
     <Hero />
     <HomeCards />
-    <JobListings isHome={true} />
+    <JobListings isHome />
     <ViewAllJobs />
     </>
   )
